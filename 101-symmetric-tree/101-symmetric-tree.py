@@ -6,8 +6,14 @@
 #         self.right = right
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        if root:
-            return self.checker(root.right, root.left)
+        stack = [(root.right, root.left)]
+        while stack:
+            right, left = stack.pop()
+            if not self.checker(right, left):
+                return False
+            if left:
+                stack.append((left.right, right.left))
+                stack.append((right.right, left.left))
         return True
             
     def checker(self, right, left):
@@ -17,4 +23,4 @@ class Solution:
             return False
         if right.val != left.val:
             return False
-        return self.checker(right.right, left.left) and self.checker(right.left, left.right)
+        return True
